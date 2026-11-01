@@ -7,4 +7,75 @@ const el=id=>document.getElementById(id),pick=a=>a[Math.floor(Math.random()*a.le
 function render(){el('nav').innerHTML=['探す','お題','タイマー','得点'].map(t=>'<button class="'+(t===tab?'active':'')+'" onclick="tab=\''+t+'\';render()">'+t+'</button>').join('');let v='';if(tab==='探す'){v='<select onchange="cat=this.value;render()">'+['すべて','会話','心理戦','推理','言葉','表現','協力'].map(c=>'<option '+(c===cat?'selected':'')+'>'+c+'</option>').join('')+'</select><button class="primary" onclick="game(pick(games.filter(g=>cat===\'すべて\'||g[1]===cat))[0])">🎲 おまかせ</button>'+games.filter(g=>cat==='すべて'||g[1]===cat).map(g=>'<div class="card"><h3>'+g[0]+'</h3><span class="tag">'+g[1]+' · '+g[2]+'人〜</span><p>'+g[3]+'</p><button onclick="game(\''+g[0]+'\')">遊び方を見る</button></div>').join('')}else if(tab==='お題'){v='<div class="card"><h3>お題ジェネレーター</h3><select id="kind"><option>究極の二択</option><option>ランダムお題</option></select><div class="big" id="prompt">ボタンを押してスタート！</div><button class="primary" onclick="el(\'prompt\').textContent=pick(el(\'kind\').value===\'究極の二択\'?choices:topics)">次のお題 ✨</button></div>'}else if(tab==='タイマー'){v='<div class="card"><h3>ゲームタイマー</h3>'+[30,60,90,180].map(n=>'<button onclick="reset('+n+')">'+n+'秒</button>').join('')+'<div class="big" id="clock">'+fmt(seconds)+'</div><button class="primary" onclick="toggle()">'+(timer?'一時停止':'スタート')+'</button><button onclick="reset(60)">リセット</button></div>'}else{v='<div class="card"><h3>得点ボード</h3>'+players.map((p,i)=>'<div><input value="'+esc(p)+'" onchange="players['+i+']=this.value;save()"><button onclick="score('+i+',-1)">−</button><b>'+scores[i]+'</b><button class="primary" onclick="score('+i+',1)">＋</button></div>').join('')+'<button onclick="players.push(\'チーム\'+(players.length+1));scores.push(0);save();render()">＋ チーム追加</button><button onclick="if(confirm(\'得点をリセットしますか？\')){scores=scores.map(()=>0);save();render()}">リセット</button></div>'}el('view').innerHTML=v}
 function game(name){let g=games.find(x=>x[0]===name);el('view').innerHTML='<button onclick="render()">← 一覧へ</button><div class="card"><h2>'+g[0]+'</h2><p>'+g[3]+'</p><p>目安 '+g[2]+'人〜</p><button class="primary" onclick="tab=\'お題\';render()">お題を出す</button><button onclick="tab=\'タイマー\';render()">タイマー</button></div>'}
 function reset(n){clearInterval(timer);timer=null;seconds=n;render()}function toggle(){if(timer){clearInterval(timer);timer=null;render();return}timer=setInterval(()=>{seconds=Math.max(0,seconds-1);if(el('clock'))el('clock').textContent=fmt(seconds);if(!seconds){clearInterval(timer);timer=null;alert('時間です！');render()}},1000);render()}function score(i,n){scores[i]+=n;save();render()}render();
+</script>
+<style>
+:root{color-scheme:dark}body{padding-bottom:40px}button{touch-action:manipulation}button:focus-visible{outline:3px solid #f7c76b}.card{border:1px solid #484364}input[type=number]{width:65px}.muted{color:#c4bfd8}.secret{background:#332e56;border:2px dashed #b5a1ff;padding:24px;border-radius:18px;text-align:center;margin:18px 0}.secret strong{font-size:26px}.stack{display:grid;gap:10px}.stack button{margin:0}.wide{width:100%}.small{font-size:13px}.pill{display:inline-block;background:#49416c;border-radius:20px;padding:5px 9px;margin:3px}
+</style>
+<script>
+const extraGames=[
+['連想ゲーム','言葉',2,'ひとつの単語から連想をつなげる'],
+['10秒チャレンジ','表現',2,'10秒でお題をいくつ答えられるか'],
+['以心伝心','協力',2,'お題への回答を全員で一致させる'],
+['カタカナ禁止','言葉',2,'カタカナ語を使わずに会話'],
+['あいうえお作文','言葉',2,'指定文字から面白い文章を作る'],
+['絵しりとり','表現',3,'絵だけでしりとりを続ける'],
+['インサイダー','推理',4,'答えを知る人を質問から見抜く'],
+['水平思考クイズ','推理',2,'はい・いいえの質問で真相を探る'],
+['質問リレー','会話',2,'質問だけで会話を続ける'],
+['ぴったり回答','協力',3,'全員が同じ答えになるよう考える'],
+['記憶力リレー','言葉',2,'前の人の答えを覚えて追加する'],
+['NGリアクション','心理戦',3,'指定された反応を引き出す'],
+['3ヒントクイズ','推理',2,'3つのヒントから答えを当てる'],
+['ランキング当て','会話',3,'お題の順位を予想して発表'],
+['大喜利','表現',2,'お題に面白い回答をする'],
+['嘘か本当か','心理戦',3,'体験談の真偽を見破る'],
+['共感王','会話',3,'最も共感される答えを目指す'],
+['一文字会話','言葉',2,'一文字ずつ話をつなげる'],
+['逆さ言葉','言葉',2,'単語を逆から言って当ててもらう'],
+['声だけモノマネ','表現',2,'声だけで人物や動物を表現'],
+['あるなしクイズ','推理',2,'共通ルールを見つける'],
+['物語リレー','表現',2,'一文ずつ即興物語を作る'],
+['心理テスト作り','会話',2,'オリジナル心理テストを考える'],
+['禁句インタビュー','心理戦',2,'相手に指定ワードを言わせる'],
+['一斉指差し','会話',3,'お題に合う人を同時に指す'],
+['早口言葉','表現',2,'噛まずに言えるか挑戦'],
+['擬音だけ伝言','表現',3,'擬音だけで状況を伝える'],
+['一分間スピーチ','表現',2,'お題について一分間話す'],
+['多数決予想','心理戦',3,'どちらが多数派か当てる'],
+['一致するまで帰れまテン','協力',3,'全員の答えが揃うまで続ける'],
+['ヒント禁止クイズ','推理',2,'禁止単語を避けて説明'],
+['逆質問ゲーム','会話',2,'答えに合う質問を作る'],
+['三つの共通点','協力',2,'全員に共通することを三つ探す'],
+['もしも会議','会話',2,'もしもの設定で議論する'],
+['物の値段当て','推理',2,'身近な物の価格を予想'],
+['テーマ縛り連想','言葉',2,'指定テーマ内で連想を続ける'],
+['一筆書き伝言','表現',3,'絵を一筆で描いて伝える'],
+['カウントアップ','協力',3,'順番を決めずに数字を数える'],
+['ジェスチャー伝言','表現',4,'ジェスチャーを順番に伝える'],
+['褒め言葉しりとり','会話',2,'褒め言葉だけでしりとり']
+];games.push(...extraGames);
+const extraChoices=['100万円を今もらう or 10年後に1000万円','一週間スマホなし or 一週間外出なし','好きな曲を一生一曲だけ or 毎日違う曲しか聴けない','空を飛べる or 水中で呼吸できる','一生早起き or 一生夜更かし','毎日旅行 or 毎日家で趣味','絶対に嘘をつけない or 嘘を全部見抜ける','友達と世界一周 or 一人で宇宙旅行','10分先を見られる or 10分前に戻れる','食事無料 or 交通費無料','全員に秘密がバレる or 全員の秘密を知る','笑いが止まらない or くしゃみが止まらない','毎日同じ服 or 毎日違う服','有名人になる or 大富豪になる','未来の自分から手紙 or 過去の自分へ手紙','一生映画禁止 or 一生ゲーム禁止'];
+const extraTopics=['動物園の動物','人気の食べ物','修学旅行の思い出','絶対に遅刻できない理由','世界一弱いヒーロー','架空の新しい祝日','最高の休日','使えない超能力','変な校則','怖くない怪談','架空のスポーツ','お祭りの屋台','旅行の必需品','お弁当のおかず','100円ショップの商品','忘れられない一言','架空の会社名','変な商品レビュー','無茶な言い訳','夏の風物詩'];
+choices.push(...extraChoices);topics.push(...extraTopics);
+const originalRender=render;
+let mode='catalog',fav=new Set(JSON.parse(localStorage.getItem('azFavorites')||'[]')),history=[];
+const savedRender=render;
+render=function(){if(['ワードウルフ','NGワード','多数派ゲーム','究極の二択'].includes(mode)){renderPlay();return}savedRender();if(tab==='探す'){const v=el('view');v.insertAdjacentHTML('afterbegin','<div class="card"><strong>🎮 すぐ遊ぶ</strong><div class="stack">'+['ワードウルフ','NGワード','多数派ゲーム','究極の二択'].map(n=>'<button class="primary wide" onclick="startPlay(\''+n+'\')">'+n+'をプレイ</button>').join('')+'</div><p class="small">図鑑 '+games.length+'種類 · お気に入り '+fav.size+'件</p><button onclick="showFavorites()">★ お気に入り一覧</button></div>');v.querySelectorAll('.card').forEach(c=>{const h=c.querySelector('h3');if(h){let n=h.textContent;c.insertAdjacentHTML('beforeend','<button onclick="favorite(\''+n+'\')">'+(fav.has(n)?'★ 登録済み':'☆ お気に入り')+'</button>')}})}};
+function favorite(n){fav.has(n)?fav.delete(n):fav.add(n);localStorage.setItem('azFavorites',JSON.stringify([...fav]));render()}
+function showFavorites(){el('view').innerHTML='<button onclick="render()">← 戻る</button>'+[...fav].map(n=>'<div class="card"><h3>'+n+'</h3><button onclick="game(\''+n+'\')">詳細</button></div>').join('')||'お気に入りはまだありません'}
+let play={},revealed=false;
+function startPlay(n){mode=n;play={n,step:0,count:4,round:0,points:{},word:'',wolf:0};renderPlay()}
+function exitPlay(){mode='catalog';tab='探す';render()}
+function renderPlay(){let v='<button onclick="exitPlay()">← 図鑑に戻る</button><div class="card"><h2>'+mode+'</h2>';
+if(mode==='ワードウルフ'){if(play.step===0){v+='<p>スマホを一人ずつ渡して、自分のお題だけ確認。少数派を議論で見つけよう。</p><label>参加人数 <input type="number" id="count" min="3" max="20" value="'+play.count+'"></label><button class="primary" onclick="setupWolf()">開始</button>'}else if(play.step===1){v+='<p>プレイヤー '+(play.round+1)+' / '+play.count+'</p><div class="secret">'+(revealed?'<strong>'+ (play.round===play.wolf?play.word[1]:play.word[0])+'</strong>':'<p>ほかの人に画面を見せないでください</p>')+'</div><button class="primary" onclick="wolfNext()">'+(revealed?'確認完了・次へ':'自分のお題を見る')+'</button>'}else{v+='<p>全員確認しました。3分間話し合って少数派を投票で決めてください。</p><button onclick="tab=\'タイマー\';mode=\'catalog\';reset(180)">3分タイマーへ</button><button class="primary" onclick="alert(\'少数派はプレイヤー '+(play.wolf+1)+' でした！\')">答え合わせ</button>'}}
+else if(mode==='NGワード'){if(!play.words){v+='<p>各プレイヤーに禁止ワードを割り当てます。本人だけが自分のワードを確認し、会話中に言わないようにしましょう。</p><label>参加人数 <input type="number" id="count" min="2" max="20" value="4"></label><button class="primary" onclick="setupNG()">開始</button>'}else{v+='<p>プレイヤー '+(play.round+1)+' / '+play.count+'</p><div class="secret">'+(revealed?'<strong>'+play.words[play.round]+'</strong>':'画面を隠して確認')+'</div><button class="primary" onclick="ngNext()">'+(revealed?'次へ':'ワードを見る')+'</button>'}}
+else{let arr=mode==='究極の二択'?choices:topics;v+='<p>お題を読み上げ、全員で回答しましょう。</p><div class="secret"><strong>'+ (play.word||'お題を出してスタート')+'</strong></div><button class="primary" onclick="play.word=pick('+(mode==='究極の二択'?'choices':'topics')+');renderPlay()">次のお題</button><button onclick="tab=\'得点\';mode=\'catalog\';render()">得点ボード</button>'}
+el('view').innerHTML=v+'</div>'}
+const pairs=[['犬','猫'],['海','プール'],['コーヒー','紅茶'],['映画館','劇場'],['カレー','シチュー'],['新幹線','飛行機'],['夏祭り','花火大会'],['遊園地','動物園'],['寿司','刺身'],['漫画','小説'],['サッカー','フットサル'],['温泉','銭湯']];
+function setupWolf(){play.count=Math.min(20,Math.max(3,Number(el('count').value)||4));play.wolf=Math.floor(Math.random()*play.count);play.word=pick(pairs);play.step=1;play.round=0;revealed=false;renderPlay()}
+function wolfNext(){if(!revealed){revealed=true}else{revealed=false;play.round++;if(play.round>=play.count)play.step=2}renderPlay()}
+function setupNG(){play.count=Math.min(20,Math.max(2,Number(el('count').value)||4));play.words=Array.from({length:play.count},()=>pick(['まじ','すごい','でも','たしかに','なるほど','えー','本当','なんで','やばい','そう','ありがとう','ちょっと','普通','絶対','今日']));play.round=0;revealed=false;renderPlay()}
+function ngNext(){if(!revealed)revealed=true;else{revealed=false;play.round++;if(play.round>=play.count){play.words=null;alert('全員確認完了！会話を始めましょう')}}renderPlay()}
+const originalGame=game;game=function(n){mode='catalog';originalGame(n);const b=el('view').querySelector('.card');if(['ワードウルフ','NGワード','多数派ゲーム','究極の二択'].includes(n))b.insertAdjacentHTML('beforeend','<p><button class="primary" onclick="startPlay(\''+n+'\')">このゲームを始める</button></p>')};
+render();
 </script></html>
