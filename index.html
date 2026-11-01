@@ -197,4 +197,47 @@ input,select{background:#fff!important;color:#39263c!important;border:1px solid 
 #view>.card:first-child .stack button{color:#39263c!important}
 .pill,.tag{background:#f5e3ee!important;color:#7b5572!important}
 .empty{color:#816f7e}
-</style></html>
+</style>
+<style>
+/* v2.2 illustrated festival artwork */
+body{background-color:#fff9f0!important;background-image:
+radial-gradient(circle at 13% 17%,#ffd6d580 0 5px,transparent 6px),
+radial-gradient(circle at 91% 33%,#e7bafa99 0 7px,transparent 8px),
+radial-gradient(circle at 83% 76%,#ffce8999 0 5px,transparent 6px),
+repeating-linear-gradient(125deg,transparent 0 62px,#eecee51c 63px 64px),
+linear-gradient(160deg,#fffaf1,#fff2ee 48%,#fff9f2)!important;background-size:190px 240px,270px 290px,210px 230px,auto,auto!important}
+main{position:relative}
+main:before{content:"";position:absolute;z-index:-1;pointer-events:none;top:260px;right:-8px;width:160px;height:180px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 180'%3E%3Cpath d='M22 33L40 11 55 43 92 24 86 61 131 62 101 91 133 122 87 123 73 160 49 128 11 143 26 102 1 75 37 67Z' fill='%23f6c1dc' opacity='.42'/%3E%3C/svg%3E") center/contain no-repeat}
+.hero{min-height:326px;padding:29px 21px 24px!important;background:linear-gradient(125deg,#f5a5a1,#d77cae 56%,#b57bcb)!important;isolation:isolate}
+.hero:before{content:"";position:absolute;z-index:-2;inset:0;width:auto;height:auto;border:0;border-radius:0;background:radial-gradient(circle at 84% 65%,#ffdfb355 0 25%,transparent 26%),repeating-linear-gradient(35deg,transparent 0 20px,#ffffff0c 21px 22px);transform:none}
+.hero:after{display:none}
+.hero h2{position:relative;z-index:2;max-width:58%;font-size:clamp(29px,7.6vw,45px)!important;text-shadow:0 2px 0 #a9627933}
+.hero p{position:relative;z-index:2;max-width:56%;font-weight:600}
+.hero button{position:relative;z-index:3}
+.hero .eyebrow{position:relative;z-index:2;max-width:58%;line-height:1.7}
+.hero-art{position:absolute;right:-15px;top:28px;width:56%;height:85%;pointer-events:none;z-index:1;filter:drop-shadow(0 14px 16px #723e6440)}
+.hero-art svg{width:100%;height:100%;overflow:visible}
+.hero-sticker{position:absolute;z-index:2;right:10px;bottom:10px;background:#fff5ce;color:#96516e;font-weight:900;font-size:11px;border:2px solid #fff;border-radius:50%;width:72px;height:72px;display:grid;place-items:center;text-align:center;line-height:1.4;transform:rotate(13deg);box-shadow:0 6px 15px #7b3d5940}
+.sectionhead h2{display:flex;align-items:center;gap:7px}
+.feature{border:3px solid #fff9f1!important;box-shadow:0 9px 0 #e7c9d2,0 14px 24px #9d69882e!important;transition:transform .2s}
+.feature:active{transform:translateY(4px)}
+.feature .emoji{font-size:43px;filter:drop-shadow(0 5px 2px #0002)}
+.feature:before{content:"✦";position:absolute;right:15px;top:11px;font-size:20px;color:#fff8;transform:rotate(15deg)}
+.gamecard{border:2px solid #f0dce0!important;box-shadow:0 5px 0 #eed8df,0 11px 20px #ac819b20!important}
+.gamecard:before{content:"";position:absolute;right:8px;top:8px;width:58px;height:58px;border-radius:50%;background:#f7dfe488;pointer-events:none}
+.gamecard .art{position:relative;z-index:1;display:grid;place-items:center;width:67px;height:67px;border-radius:19px;background:linear-gradient(135deg,#ffedc8,#f8d9e7);border:2px solid #fff;box-shadow:0 5px 0 #e6c6d6;font-size:37px;transform:rotate(-5deg);margin-bottom:18px}
+.gamecard:nth-child(4n+2) .art{background:linear-gradient(135deg,#e0d5ff,#c6e8ff);transform:rotate(5deg)}
+.gamecard:nth-child(4n+3) .art{background:linear-gradient(135deg,#d6f4de,#fff0c6)}
+.gamecard:nth-child(4n+4) .art{background:linear-gradient(135deg,#ffe0c9,#ffd0d9);transform:rotate(4deg)}
+.brandicon{background:#ffe1a3!important;border:2px solid #fff!important;box-shadow:0 5px 0 #e9bb8b!important;transform:rotate(-8deg)}
+@media(max-width:380px){.hero h2{font-size:28px!important}.hero-art{right:-30px;width:58%}.hero p{font-size:11px}.hero{min-height:310px}}
+@media(prefers-reduced-motion:no-preference){.hero-art .float-a{animation:floatart 4s ease-in-out infinite}.hero-art .float-b{animation:floatart 4.5s ease-in-out -1.5s infinite}@keyframes floatart{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}}
+</style>
+<script>
+(function(){
+const art='<div class="hero-art" aria-hidden="true"><svg viewBox="0 0 230 290" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="die" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff9eb"/><stop offset="1" stop-color="#ffdeb2"/></linearGradient><linearGradient id="card" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#a17ce7"/><stop offset="1" stop-color="#704ac6"/></linearGradient></defs><g opacity=".75"><path d="M30 26l7 13 15 3-12 10 2 15-12-8-13 8 3-15-12-10 15-3z" fill="#ffeb94"/><circle cx="184" cy="35" r="6" fill="#9cf2d6"/><path d="M204 112l11 4-9 8" fill="none" stroke="#fff0bc" stroke-width="6" stroke-linecap="round"/><circle cx="32" cy="204" r="5" fill="#fff4c7"/><path d="M189 245l-7 11 14 2" fill="none" stroke="#ffe6a8" stroke-width="5" stroke-linecap="round"/></g><g class="float-b" transform="rotate(-19 122 126)"><rect x="85" y="55" width="105" height="148" rx="17" fill="#5f448f" opacity=".35"/><rect x="78" y="47" width="105" height="148" rx="17" fill="url(#card)" stroke="#e9d9ff" stroke-width="5"/><rect x="90" y="60" width="81" height="122" rx="10" fill="none" stroke="#d3bcff" stroke-width="2" stroke-dasharray="5 5"/><circle cx="130" cy="118" r="31" fill="#ffe3a6"/><path d="M109 113q21-32 43 0l-8 17-13 7-14-8z" fill="#f69c99"/><circle cx="120" cy="115" r="3.5" fill="#70458b"/><circle cx="141" cy="115" r="3.5" fill="#70458b"/><path d="M123 125q8 8 15 0" fill="none" stroke="#70458b" stroke-width="3" stroke-linecap="round"/><path d="M113 93l-9-13m44 13 9-13" stroke="#ffe3a6" stroke-width="8" stroke-linecap="round"/></g><g class="float-a" transform="rotate(15 88 197)"><rect x="35" y="155" width="100" height="100" rx="24" fill="#bf7285" opacity=".3"/><rect x="28" y="147" width="100" height="100" rx="24" fill="url(#die)" stroke="#fff" stroke-width="5"/><circle cx="54" cy="173" r="9" fill="#d9899e"/><circle cx="102" cy="173" r="9" fill="#d9899e"/><circle cx="78" cy="198" r="9" fill="#d9899e"/><circle cx="54" cy="223" r="9" fill="#d9899e"/><circle cx="102" cy="223" r="9" fill="#d9899e"/></g><g><path d="M185 181l7 13 14 3-11 9 2 14-12-7-12 7 3-14-11-9 14-3z" fill="#ffe08d"/><path d="M37 98l3 10 10 2-8 7 2 10-9-5-9 5 2-10-8-7 11-2z" fill="#a9f2dc"/></g></svg></div><div class="hero-sticker">101<br>GAMES!</div>';
+function decorate(){document.querySelectorAll('.hero').forEach(h=>{if(!h.querySelector('.hero-art'))h.insertAdjacentHTML('beforeend',art)})}
+const observer=new MutationObserver(()=>{if(document.querySelector('.hero:not(:has(.hero-art))'))decorate()});
+observer.observe(document.getElementById('view'),{childList:true,subtree:false});decorate();
+})();
+</script></html>
