@@ -89,4 +89,39 @@ const renderBase2=render;
 render=function(){renderBase2();if(tab==='探す'&&mode==='catalog'){const v=el('view');if(v&&!el('searchGames')){const block=document.createElement('div');block.className='card';block.innerHTML='<label for="searchGames">🔎 ゲーム名を検索</label><input id="searchGames" style="width:90%;margin-top:8px" placeholder="例：しりとり、推理、会話" oninput="filterGames(this.value)"><p class="small">収録 '+games.length+'種類</p>';v.prepend(block)}}};
 function filterGames(q){let v=el('view');v.querySelectorAll('.card').forEach(c=>{const h=c.querySelector('h3');if(h)c.style.display=h.textContent.includes(q)?'':'none'})}
 render();
-</script></html>
+</script><style>
+:root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:radial-gradient(ellipse 100% 380px at 50% -80px,#453475 0%,#19152e 62%,#121020 100%) fixed;color:#f8f6ff;letter-spacing:.01em}
+main{max-width:780px;padding:26px 17px 110px}
+h1{font-size:31px;letter-spacing:-.05em;font-weight:900;margin:6px 0}
+h1:before{content:"LET'S PLAY";display:block;font-size:11px;letter-spacing:.23em;color:#cbb8ff;margin-bottom:5px}
+main>p{font-size:13px;margin:6px 0 26px;color:#c7bedb}
+nav{position:sticky;top:8px;z-index:9;display:flex;background:rgba(35,29,60,.92);backdrop-filter:blur(18px);border:1px solid #6b5a8a;border-radius:18px;padding:5px;gap:2px;box-shadow:0 12px 36px #09071488;margin:0 0 22px}
+nav button{flex:1;min-width:0;margin:0;padding:13px 3px;border-radius:13px;font-size:13px;font-weight:750;background:transparent;color:#c7bbde}
+nav button.active{background:#ad8cff;color:#211137;box-shadow:0 4px 14px #ab7bff44}
+.card{background:linear-gradient(140deg,#2c2447,#211d36);border:1px solid #4a3c67;border-radius:22px;padding:20px;margin:13px 0;box-shadow:0 8px 22px #0b091733}
+.card h3{font-size:19px;letter-spacing:-.035em;margin:2px 0 9px}
+.card h2{font-size:25px}
+.card p{font-size:14px;line-height:1.65;color:#d4cde3}
+button{background:#3d315c;border:1px solid #615078;color:#eee7ff;font-size:13px;font-weight:700;border-radius:12px;padding:12px 14px;transition:transform .15s,background .15s}
+button:active{transform:scale(.97)}
+button.primary{background:linear-gradient(135deg,#c6a6ff,#a68aff);color:#211339;border:0;box-shadow:0 5px 18px #a68aff33}
+input,select{background:#332b4c;border:1px solid #675783;border-radius:12px;color:#fff}
+input:focus,select:focus{outline:2px solid #c6a6ff}
+.tag,.pill{display:inline-block;background:#47345d;color:#ead9ff;border:1px solid #68517d;border-radius:30px;padding:6px 10px;font-size:11px;font-weight:700}
+.big{font-size:30px;line-height:1.4;color:#fff}
+.secret{background:radial-gradient(circle at top,#49376f,#251c3d);border:1px solid #9b79d5;border-radius:22px;padding:28px 16px}
+#view>.card:first-child{background:linear-gradient(125deg,#51378c 0%,#39275e 60%,#262042 100%);border-color:#8264b5}
+#view>.card:first-child>strong{font-size:19px}
+#view>.card:first-child .stack{margin-top:17px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#view>.card:first-child .stack button{min-height:64px;border-radius:15px;line-height:1.4;white-space:normal}
+#view>.card:first-child .stack button:nth-child(2){background:linear-gradient(135deg,#ffbd83,#ff947a);color:#422017}
+#view>.card:first-child .stack button:nth-child(3){background:linear-gradient(135deg,#86e2d7,#65b7ca);color:#113c44}
+#view>.card:first-child .stack button:nth-child(4){background:linear-gradient(135deg,#ffe38c,#f8b96e);color:#483213}
+#view>.card h3:before{content:"✦";color:#c6a6ff;margin-right:9px;font-size:14px}
+#view>.card:has(#searchGames){background:#251f3b;border-color:#57456e}
+#searchGames{width:100%!important;padding:15px!important}
+@media(min-width:650px){#view>.card:not(:first-child){margin:12px 0}main{padding-top:40px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></html>
