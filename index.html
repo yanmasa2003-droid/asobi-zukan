@@ -172,4 +172,29 @@ game=function(n){openGame(n)};
 function newRender(){el('nav').innerHTML=['探す','お題','タイマー','得点'].map((t,i)=>'<button class="'+(t===tab?'active':'')+'" onclick="tab=\''+t+'\';detailName=null;mode=\'catalog\';render()">'+['🎮','✨','⏱','🏆'][i]+'<br>'+t+'</button>').join('');if(mode!=='catalog'){renderPlay();return}if(detailName){openGame(detailName);return}if(tab==='探す'){el('view').innerHTML=catalog();return}if(tab==='お題'){el('view').innerHTML=brand()+'<div class="sectionhead"><h2>✨ お題ジェネレーター</h2></div><div class="toolhero"><p>お題をランダムで選んで盛り上がろう</p><select id="kind"><option>究極の二択</option><option>ランダムお題</option></select><div class="big" id="prompt">ボタンを押してスタート！</div><button class="primary" onclick="el(\'prompt\').textContent=pick(el(\'kind\').value===\'究極の二択\'?choices:topics)">✨ 次のお題</button></div>';return}if(tab==='タイマー'){el('view').innerHTML=brand()+'<div class="sectionhead"><h2>⏱ ゲームタイマー</h2></div><div class="toolhero"><p>制限時間を選択</p>'+[30,60,90,180].map(n=>'<button onclick="reset('+n+')">'+n+'秒</button>').join('')+'<div class="big" id="clock" style="font-size:70px;text-align:center;font-weight:900">'+fmt(seconds)+'</div><button class="primary" onclick="toggle()">'+(timer?'一時停止':'▶ スタート')+'</button><button onclick="reset(60)">リセット</button></div>';return}el('view').innerHTML=brand()+'<div class="sectionhead"><h2>🏆 得点ボード</h2></div><div class="toolhero">'+players.map((p,i)=>'<div class="card"><input value="'+safeAttr(p)+'" onchange="players['+i+']=this.value;save()"><button onclick="score('+i+',-1)">−</button><b>'+scores[i]+'</b><button class="primary" onclick="score('+i+',1)">＋</button></div>').join('')+'<button onclick="players.push(\'チーム\'+(players.length+1));scores.push(0);save();render()">＋ チーム追加</button><button onclick="if(confirm(\'得点をリセットしますか？\')){scores=scores.map(()=>0);save();render()}">リセット</button></div>'}
 render=newRender;
 render();
-</script></html>
+</script><style>
+/* v2.1 warm, light canvas replaces blue-black surfaces */
+:root{color-scheme:light;--bg:#fff9f0;--panel:#ffffff;--line:#f0dfd4;--ink:#33253b;--muted:#786b7c}
+html,body{background:#fff9f0!important;color:#33253b!important}
+body{background-image:radial-gradient(ellipse 350px 280px at 100% 0%,#ffe2d6 0%,transparent 75%),radial-gradient(ellipse 350px 350px at 0% 42%,#f9e9ff 0%,transparent 75%)!important;background-attachment:fixed!important}
+.brandname,.sectionhead h2{color:#39263c}.brandname small{color:#b06b8c}.version{color:#846f7e;border-color:#e9d7da;background:#fff9}
+.hero{background:linear-gradient(130deg,#fa9c8e,#e783aa 58%,#c88ee2)!important;box-shadow:0 18px 35px #da8ca54d}
+.hero .eyebrow,.hero p{color:#fff9f6!important}
+nav#nav{background:#fff9f4ef!important;border-color:#edd7d4!important;box-shadow:0 12px 30px #77526824!important}
+nav#nav button{color:#8c748b!important}nav#nav button.active{background:#efb6c8!important;color:#48283c!important}
+.searchrow{background:#fff!important;border-color:#ead9db!important}.searchrow input{color:#39263c!important}.searchrow input::placeholder{color:#a99ba5}
+.chips button{background:#fff!important;border-color:#ebd9db!important;color:#765f75!important}.chips button.selected{background:#f9cfda!important;border-color:#eab2c4!important;color:#653e56!important}
+.gamecard{background:linear-gradient(150deg,#fff,#fff7f5)!important;border-color:#f0dfdf!important;box-shadow:0 7px 18px #af7c9121!important}
+.gamecard strong{color:#39273c}.gamecard p{color:#7c6a7c}.gamecard footer span{background:#f7eaf0;color:#775675}.gamecard .star{color:#e7a14e}
+.card,.toolhero{background:#fff!important;border-color:#eddde3!important;color:#39273c!important;box-shadow:0 8px 20px #a47d9520!important}
+.card h2,.card h3,.toolhero h2{color:#39273c!important}.card p,.toolhero p{color:#78687a!important}
+.detailhero{background:linear-gradient(135deg,#ffe0d5,#f3d7fa)!important;border-color:#e8c4df!important}.detailhero h2{color:#39273c!important}.detailhero p{color:#70576f!important}.detailhero .meta{color:#a05f83!important}
+button{background:#f7e7ed;color:#573f57;border-color:#edcbd8}button.primary{background:linear-gradient(135deg,#f9b5bf,#e5a9e9)!important;color:#452941!important}
+input,select{background:#fff!important;color:#39263c!important;border:1px solid #e6cfdc!important}
+.secret{background:linear-gradient(135deg,#fff0e6,#f9e9ff)!important;border-color:#e7bad8!important;color:#39263c!important}
+.secret strong,.big{color:#39263c!important}
+#view>.card:first-child{background:linear-gradient(130deg,#ffe0d8,#f7e4fb)!important;border-color:#eccbdd!important}
+#view>.card:first-child .stack button{color:#39263c!important}
+.pill,.tag{background:#f5e3ee!important;color:#7b5572!important}
+.empty{color:#816f7e}
+</style></html>
